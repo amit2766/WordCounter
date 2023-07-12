@@ -1,5 +1,6 @@
 import re
 import threading
+import timeit
 from threading import Thread
 
 
@@ -26,8 +27,7 @@ def count_word_occurrences(file_path):
                             word_count[word] += count
                         else:
                             word_count[word] = count
-
-            num_threads = 4  # Set the number of threads
+            num_threads = 4
             chunk_size = len(words) // num_threads
             threads = []
 
@@ -47,9 +47,11 @@ def count_word_occurrences(file_path):
     except IOError:
         print("An error occurred while reading the file.")
 
-
-# Example usage
-file_path = 'gnu_license.txt'  # Replace with your file path
+file_path = 'gnu_license.txt'
+start = timeit.time.time_ns()
 word_occurrences = count_word_occurrences(file_path)
 for word, count in word_occurrences.items():
     print(word, count)
+
+end = timeit.time.time_ns()
+print("Total TIme" , end - start)
